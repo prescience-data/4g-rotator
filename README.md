@@ -46,7 +46,7 @@ But what if you need to access 4G IPs in a different country?
 
 Just install this package on a cheap headless nano-PC such as an Intel Compute Stick https://www.intel.com/content/www/us/en/products/boards-kits/compute-stick.html and install WireGuard https://www.wireguard.com along with our local 3Proxy script https://github.com/prescience-data/3proxy-config
 
-Then just VPN to the headless PC and you'll have access to it's SOCKS5 proxy!
+Then just VPN to the headless PC and you'll have access to its SOCKS5 proxy!
 
 The optimal solution is to connect the Compute Stick to wifi (which WireGuard will use to connect in) and proxy connections out via 4G USB tethering to avoid congestion, but it is possible to go in and out via the same 4G provided you have enough bandwidth.
 
