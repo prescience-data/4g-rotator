@@ -40,7 +40,7 @@ Additionally, although you can use this via Wifi tethering, it's quite a bit mor
 To avoid data excess, disable your phones auto update over 4g and set to only update over Wifi.
 
 
-### Running Remotely 
+### Running Remotely / Offshore 
 
 But what if you need to access 4G IPs in a different country?
 
@@ -53,7 +53,7 @@ The optimal solution is to connect the Compute Stick to wifi (which WireGuard wi
 You can install some remote management software such as AnyDesk to remote into the headless PC whenever you need to fix or install something provided it remains connected to local internet. 
 
 
-#### Demo
+### Demo
 
 When configured correctly, the package should run like this:
 
