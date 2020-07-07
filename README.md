@@ -11,7 +11,7 @@ You can run this script manually just by calling the `Renew.sh` shortcut, or bui
 1. A clean 4g capable Android phone (ie ideally not the one you use day to day to avoid any identity leaks). Does not require root.
 2. A clean Google account not used for anything else to receive cloud messages.
 3. Automate app https://play.google.com/store/apps/details?id=com.llamalab.automate
-4. Node https://nodejs.org/en/download/
+4. Node https://nodejs.org/en/download
 
 ### Installation
 
@@ -25,7 +25,7 @@ You can run this script manually just by calling the `Renew.sh` shortcut, or bui
 
 ##### Node
 1. Run `npm install` in the `./Router` directory to install dependencies. 
-2. Generage a "secret" for this google account from https://llamalab.com/automate/cloud/
+2. Generage a "secret" for your clean Google account from https://llamalab.com/automate/cloud
 3. Add this "secret" to `config.json` file along with your clean Google address.
 
 ##### Windows
