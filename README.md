@@ -4,6 +4,8 @@
 
 This package allows a user to autoconnect to USB tethering and cycle an Android phones flight mode using cloud messages. Not root required.
 
+You can run this script manually just by calling the `Renew.sh` shortcut, or build it into a Puppeteer script to autorenew IPs.
+
 ### What you need
 
 1. A clean 4g capable Android phone (ie not the one you use day to day) to avoid any identity leaks. Does not require root.
