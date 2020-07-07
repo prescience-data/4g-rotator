@@ -1,0 +1,7 @@
+{
+  "secret": "YOURAUTOMATESECRET",
+  "to": "YOURCLEANACCOUNT@gmail.com",
+  "priority":"normal",
+  "device": null,
+  "payload":"renew"
+}
