@@ -28,7 +28,7 @@ This package allows a user to autoconnect to USB tethering and cycle an Android 
 3. Add this "secret" to `config.json` file along with your clean Google address.
 
 ##### Windows
-1. Run the shortcut script and watch your phone renew its IP!
+1. Run the `Renew.sh` shortcut script and watch your phone renew its IP!
 
 ### Recommendations
 
