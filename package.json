@@ -1,0 +1,19 @@
+{
+	"name": "prescience-router",
+	"version": "1.0.0",
+	"description": "4G Autorenewal Script",
+	"private": true,
+	"keywords": ["4g", "automate"],
+	"author": "Prescience Data",
+	"license": "ISC",
+	"dependencies": {
+		"axios": "^0.19.2",
+		"cross-env": "^7.0.2",
+		"lodash": "^4.17.15",
+		"yargs": "^15.3.1"
+	},
+	"devDependencies": {
+		"webpack": "^4.43.0",
+		"webpack-cli": "^3.3.11"
+	}
+}
