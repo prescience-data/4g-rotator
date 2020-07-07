@@ -19,6 +19,7 @@ You can run this script manually just by calling the `Renew.sh` shortcut, or bui
 
 ##### Automate / Android
 1. Set your `"Toggle Flight Mode"` quick access icon to the first icon on your pull down list. 
+![Set Dropdown](https://github.com/prescience-data/4g-rotator/blob/master/Doc/flight-mode.jpg?raw=true)
 2. Copy the two `.flo` scripts to your phone.
     (Note you might need to edit the Flow in step `19` & `43` (as per PDF) if your language pack calls Flight Mode something like `"Airplane Mode"` or `"Aeroplane Mode"` etc)
 3. In step `42` (as per PDF) `"Cloud Receive"`, set the account to your clean Google account.
