@@ -53,3 +53,9 @@ The optimal solution is to connect the Compute Stick to wifi (which WireGuard wi
 You can install some remote management software such as AnyDesk to remote into the headless PC whenever you need to fix or install something provided it remains connected to local internet. 
 
 
+#### Demo
+
+When configured correctly, the package should run like this:
+
+https://youtu.be/rbMXmME2TRs
+
