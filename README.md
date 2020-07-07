@@ -2,18 +2,16 @@
 
 ### What it does
 
-This package allows a user to autoconnect to USB tethering and cycle an Android phones flight mode using cloud messages. Not root required.
+This package allows a user to autoconnect to USB tethering and cycle an Android phones flight mode using Automate app and cloud messages. Not root required.
 
-You can run this script manually just by calling the `Renew.sh` shortcut, or build it into a Puppeteer script to autorenew IPs.
+You can run this script manually just by calling the `Renew.sh` shortcut, or build it into any Node / Puppeteer script to autorenew IPs.
 
 ### What you need
 
-1. A clean 4g capable Android phone (ie not the one you use day to day) to avoid any identity leaks. Does not require root.
+1. A clean 4g capable Android phone (ie ideally not the one you use day to day to avoid any identity leaks). Does not require root.
 2. A clean Google account not used for anything else to receive cloud messages.
 3. Automate app https://play.google.com/store/apps/details?id=com.llamalab.automate
-4. Ability to run bash scripts on your PC (ie install MinTTY or https://gitforwindows.org/) if you just want to use the shortcut script.
-5. Node https://nodejs.org/en/download/
-
+4. Node https://nodejs.org/en/download/
 
 ### Installation
 
@@ -31,7 +29,7 @@ You can run this script manually just by calling the `Renew.sh` shortcut, or bui
 3. Add this "secret" to `config.json` file along with your clean Google address.
 
 ##### Windows
-1. Run the `Renew.sh` shortcut script and watch your phone renew its IP!
+1. Run the `Renew.sh` / `Renew.bat` shortcut script and watch your phone renew its IP!
 
 ### Recommendations
 
@@ -44,9 +42,11 @@ To avoid data excess, disable your phones auto update over 4g and set to only up
 
 ### Running Remotely 
 
-Let's say you need to access 4G IPs in a different country... 
+But what if you need to access 4G IPs in a different country?
 
-Just install this package on a cheap headless nano PC such as an Intel Compute Stick https://www.intel.com/content/www/us/en/products/boards-kits/compute-stick.html and install WireGuard https://www.wireguard.com along with our local 3Proxy script https://github.com/prescience-data/3proxy-config
+Just install this package on a cheap headless nano-PC such as an Intel Compute Stick https://www.intel.com/content/www/us/en/products/boards-kits/compute-stick.html and install WireGuard https://www.wireguard.com along with our local 3Proxy script https://github.com/prescience-data/3proxy-config
+
+Then just VPN to the headless PC and you'll have access to it's SOCKS5 proxy!
 
 The optimal solution is to connect the Compute Stick to wifi (which WireGuard will use to connect in) and proxy connections out via 4G USB tethering to avoid congestion, but it is possible to go in and out via the same 4G provided you have enough bandwidth.
 
