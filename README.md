@@ -8,10 +8,11 @@ You can run this script manually just by calling the `Renew.sh` shortcut, or bui
 
 ### What you need
 
-1. A clean 4g capable Android phone (ie ideally not the one you use day to day to avoid any identity leaks). Does not require root.
+1. A clean 4G capable Android phone (ie ideally not the one you use day to day to avoid any identity leaks). Does not require root.
 2. A clean Google account not used for anything else to receive cloud messages.
 3. Automate app https://play.google.com/store/apps/details?id=com.llamalab.automate
 4. Node https://nodejs.org/en/download
+
 
 ### Installation
 
@@ -29,18 +30,19 @@ You can run this script manually just by calling the `Renew.sh` shortcut, or bui
 3. Add this "secret" to `config.json` file along with your clean Google address.
 
 ##### Windows
-1. Run the `Renew.sh` / `Renew.bat` shortcut script and watch your phone renew its IP!
+1. Run the `Renew.sh` / `Renew.bat` shortcut script and watch your phone renew its IP (see quick video demo below)! Or integrate with your existing Node automations.
+
 
 ### Recommendations
 
-I also recommend enabling the Auto Tether via USB script to avoid having to manually enable USB tethering each time you plug it in as a USB modem.
+We also recommend enabling the Auto Tether via USB script to avoid having to manually enable USB tethering each time you plug it in as a USB modem.
 
 Additionally, although you can use this via Wifi tethering, it's quite a bit more complicated to manage this in a Node script, but it is possible. 
 
-To avoid data excess, disable your phones auto update over 4g and set to only update over Wifi.
+To avoid data excess, disable your phones auto update over 4G and set to only update over Wifi.
 
 
-### Running Remotely / Offshore 
+### Taking It Further / Running Remotely / Offshore 
 
 But what if you need to access 4G IPs in a different country?
 
