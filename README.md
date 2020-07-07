@@ -40,3 +40,15 @@ Additionally, although you can use this via Wifi tethering, it's quite a bit mor
 
 To avoid data excess, disable your phones auto update over 4g and set to only update over Wifi.
 
+
+### Running Remotely 
+
+Let's say you need to access 4G IPs in a different country... 
+
+Just install this package on a cheap headless nano PC such as an Intel Compute Stick https://www.intel.com/content/www/us/en/products/boards-kits/compute-stick.html and install WireGuard https://www.wireguard.com along with our local 3Proxy script https://github.com/prescience-data/3proxy-config
+
+The optimal solution is to connect the Compute Stick to wifi (which WireGuard will use to connect in) and proxy connections out via 4G USB tethering to avoid congestion, but it is possible to go in and out via the same 4G provided you have enough bandwidth.
+
+You can install some remote management software such as AnyDesk to remote into the headless PC whenever you need to fix or install something provided it remains connected to local internet. 
+
+
