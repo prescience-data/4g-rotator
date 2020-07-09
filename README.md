@@ -30,8 +30,10 @@ You can run this script manually just by calling the `Renew.sh` shortcut, or bui
 3. Add this "secret" to `config.json` file along with your clean Google address.
 
 ##### Windows
-1. Run the `Renew.sh` / `Renew.bat` shortcut script and watch your phone renew its IP (see quick video demo below)! Or integrate with your existing Node automations.
+1. Run the `Renew.sh` / `Renew.bat` shortcut script and watch your phone renew its IP! (See quick video demo here: https://youtu.be/rbMXmME2TRs) 
+Or alternatively integrate with your existing Node/Puppeteer automations.
 
+![Example](https://github.com/prescience-data/4g-rotator/blob/master/Doc/demo.jpg?raw=true)
 
 ### Recommendations
 
