@@ -37,9 +37,9 @@ Or alternatively integrate with your existing Node/Puppeteer automations.
 
 ### Recommendations
 
-We also recommend enabling the Auto Tether via USB script to avoid having to manually enable USB tethering each time you plug it in as a USB modem.
+Recommend enabling the `Auto Tether` flow on the handset to avoid having to manually enable USB tethering each time you plug it in as a USB modem.
 
-Additionally, although you can use this via Wifi tethering, it's quite a bit more complicated to manage this in a Node script, but it is possible. 
+Additionally, you can use this via Wifi Tethering, although it's quite a bit more complicated / less reliable to manage this in a Node script. 
 
 To avoid data excess, disable your phones auto update over 4G and set to only update over Wifi.
 
@@ -55,9 +55,9 @@ But what if you need to access 4G IPs in a different country?
 
 ##### Steps
 1. Just install this package on the headless PC along with WireGuard (as listener) and 3Proxy.
-2. Install the 3proxy config and install as a service.
-3. Setup WireGuard as a client instance on your regular PC.
-4. Then just VPN to the headless PC and you'll have access to its SOCKS5 proxy!
+2. Install the 3proxy config to create a local SOCKS5 proxy and install as a service.
+3. Setup WireGuard VPN as a client instance on your regular PC.
+4. VPN to the headless PC and you'll have access to its SOCKS5 proxy!
 
 The optimal solution is to connect the Compute Stick to wifi (which WireGuard will use to connect in) and proxy connections out via 4G USB tethering to avoid congestion, but it is possible to go in and out via the same 4G provided you have enough bandwidth.
 
