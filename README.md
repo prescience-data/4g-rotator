@@ -2,7 +2,7 @@
 
 ### What it does
 
-This package allows a user to autoconnect to USB tethering and cycle an Android phones flight mode using Automate app and cloud messages. Not root required.
+This package allows a user to cycle an Android phones flight mode using Automate app and cloud messages. The result is automated 4G IP renewal. Not root required.
 
 You can run this script manually just by calling the `Renew.sh` shortcut, or build it into any Node / Puppeteer script to autorenew IPs.
 
