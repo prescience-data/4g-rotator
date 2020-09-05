@@ -26,7 +26,7 @@ You can run this script manually just by calling the `Renew.sh` shortcut, or bui
 
 ##### Node
 1. Run `npm install` in the `./Router` directory to install dependencies. 
-2. Generage a "secret" for your clean Google account from https://llamalab.com/automate/cloud
+2. Generage a "secret" for your clean Google account from https://llamalab.com/automate/cloud/
 3. Add this "secret" to `config.json` file along with your clean Google address.
 
 ##### Windows
