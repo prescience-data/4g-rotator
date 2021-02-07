@@ -22,6 +22,7 @@ This package allows a user to cycle an Android phones flight mode using Automate
 4. Disable phone Wifi and start the Flow on your phone. After the flow is started you can exit Automate and it will stay running.
 
 ##### Example of dropdown
+
 ![Dropdown](https://user-images.githubusercontent.com/65471523/107136442-4f64a800-6957-11eb-8a1d-ece00cb6f481.png)
 
 ### Application
@@ -76,10 +77,35 @@ export class Demo {
     }
   }
 }
-
-
 ```
 
+## Configuration
+
+#### Option 1: Create an `.env` file:
+
+```dotenv
+IP_RENEWAL_SECRET=<enter-your-automate-secret>
+IP_RENEWAL_EMAIL=<enter-your-automate-email>
+IP_RENEWAL_PRIORITY=normal
+IP_RENEWAL_PAYLOAD=renew
+IP_RENEWAL_MAX_ATTEMPTS=3
+IP_RENEWAL_DELAY=1000
+```
+
+#### Option 2: Pass a configuration object:
+
+```typescript
+const config: RouterConfig = {
+  secret: "<your-secret>",
+  to: "<your-email>",
+  priority: "normal",
+  payload: "renew",
+  maxAttempts: 3,
+  delay: 1200
+}
+const router: RenewableRouter = new Router(config)
+
+```
 
 ## Recommendations
 

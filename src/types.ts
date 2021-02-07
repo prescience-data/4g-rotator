@@ -8,7 +8,7 @@ export interface IpHistory {
 export interface RouterEnv extends Record<string, unknown> {
   IP_RENEWAL_SECRET?: string
   IP_RENEWAL_EMAIL?: string
-  IP_RENEWAL_PRIORITY?: "low" | "normal" | "high" | string
+  IP_RENEWAL_PRIORITY?: "normal" | "high" | string
   IP_RENEWAL_PAYLOAD?: "renew" | string
   IP_RENEWAL_MAX_ATTEMPTS?: number
   IP_RENEWAL_DELAY?: number
