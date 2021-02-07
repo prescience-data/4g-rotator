@@ -1,0 +1,52 @@
+{
+  "name": "renew-ip",
+  "version": "1.0.0",
+  "description": "A module for renewing 4G/LTE IP addresses on tethered Android phones from Node.",
+  "keywords": [
+    "4g",
+    "lte",
+    "tethering",
+    "ip-renewal",
+    "automate"
+  ],
+  "license": "MIT",
+  "author": "0x00trace",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "files": [
+    "lib"
+  ],
+  "scripts": {
+    "build": "rimraf ./lib && tsc",
+    "depcheck": "dependency-check ./package.json --verbose --ignore-module \"@types/*\" --nodev",
+    "lint": "eslint . --ext .ts --fix",
+    "sort": "sort-package-json",
+    "test": "nyc --extension .ts mocha --forbid-only --comp test/**/*.test.ts",
+    "upgrade": "npm-check-updates -u --packageFile package.json"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "public-ip": "^4.0.3",
+    "is-online": "^9.0.0",
+    "tslib": "^2.1.0",
+    "got": "^11.8.1"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-config": "^2.3.2",
+    "@rushstack/heft": "^0.24.2",
+    "@types/node": "^14.14.25",
+    "@typescript-eslint/eslint-plugin": "^4.14.2",
+    "@typescript-eslint/parser": "^4.14.2",
+    "eslint": "^7.19.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "patch-package": "^6.2.2",
+    "sort-package-json": "^1.48.1",
+    "typescript": "4.1.3"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.3.2"
+  },
+  "engines": {
+    "node": ">=8"
+  }
+}
