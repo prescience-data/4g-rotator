@@ -1,0 +1,15 @@
+#!/usr/bin/env node
+
+(async () => {
+  try {
+    const args = process.argv.slice(2)
+    const { Router } = require("../lib/index")
+    const maxAttempts = args[0] || undefined
+    const router = await new Router({ maxAttempts })
+    const result = await router.renew()
+    const ip = router.ip
+    console.log(`IP renewal result: `, { result, ip })
+  } catch (err) {
+    console.log(err.message)
+  }
+})()

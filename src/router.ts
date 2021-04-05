@@ -1,12 +1,20 @@
 import EventEmitter from "events"
-import { v4 as getPublicIp } from "public-ip"
 
-import { defaultConfig } from "./config"
-import { IpHistory, RenewableRouter, RouterConfig } from "./types"
-import { hasConnection, toggleFlightMode, waitFor } from "./utils"
+import { getIpData, toggleFlightMode } from "./api"
+import { RenewalFailedError } from "./errors"
+import { IpHistorySchema, RouterConfigSchema } from "./schemas"
+import {
+  IpHistory,
+  PartialRouterConfig,
+  RenewableRouter,
+  RouterConfig
+} from "./types"
+import { debug, getLastIp, hasConnection, waitForTimeout } from "./utils"
 
 /**
- * @class Router
+ * Renewable 4G Router
+ *
+ * @class
  * @classdesc Renews an IP address on a device connected with Automate.
  * @extends {EventEmitter}
  * @implements {RenewableRouter}
@@ -39,13 +47,17 @@ export class Router extends EventEmitter implements RenewableRouter {
    * Constructor
    * Accepts an optional configuration if not using env file.
    *
-   * @param {RouterConfig} config
+   * @param {PartialRouterConfig} config
    */
-  public constructor(config?: RouterConfig) {
+  public constructor(config?: PartialRouterConfig) {
     super()
-    this._config = config || defaultConfig
+    debug(`Constructing router.`)
+    // Parse config.
+    this._config = RouterConfigSchema.parse(config)
+    // Init history.
     this._history = new Set<IpHistory>()
     this._cache = new Set<IpHistory>()
+    debug(`Router constructed.`)
   }
 
   /**
@@ -54,10 +66,7 @@ export class Router extends EventEmitter implements RenewableRouter {
    * @return {string | undefined}
    */
   public get ip(): string | undefined {
-    const record: IpHistory | undefined = Array.from(
-      this._history.values() || []
-    ).pop()
-    return record ? record.ip : undefined
+    return getLastIp(this._history)
   }
 
   /**
@@ -75,10 +84,7 @@ export class Router extends EventEmitter implements RenewableRouter {
    * @return {string | undefined}
    */
   public get lastCachedIp(): string | undefined {
-    const record: IpHistory | undefined = Array.from(
-      this._cache.values() || []
-    ).pop()
-    return record ? record.ip : undefined
+    return getLastIp(this._cache)
   }
 
   /**
@@ -87,16 +93,28 @@ export class Router extends EventEmitter implements RenewableRouter {
    * @return {IpHistory[]}
    */
   public get history(): IpHistory[] {
-    return Array.from(this._history.values() || [])
+    return [...(this._history.values() || [])]
   }
 
   /**
-   * Inform user when a new ip has been obtained.
+   * Inform user when a new ip has been obtained or drop if dirty address.
    *
    * @return {boolean}
    */
-  public hasNewIp(): boolean {
-    return this.ip !== this.lastCachedIp
+  public validateIp(data: IpHistory | undefined): boolean {
+    // Drop if no response.
+    if (!data) {
+      return false
+    }
+    // Loop over threat detections.
+    for (const [key, value] of Object.entries(data.threat || {})) {
+      if (value) {
+        debug(`IP flagged as "${key}"! Rejecting.`)
+        return false
+      }
+    }
+    // Check if ip already used.
+    return data.ip !== this.lastCachedIp
   }
 
   /**
@@ -105,13 +123,26 @@ export class Router extends EventEmitter implements RenewableRouter {
    * @return {Promise<void>}
    */
   public async init(): Promise<void> {
-    const record: IpHistory = {
-      ip: await getPublicIp(),
-      timestamp: Date.now()
-    }
+    debug(`Initialising router.`)
+    const record: IpHistory = await this.lookup()
     this._history.add(record)
     this._cache.add(record)
     this.emit("init")
+    debug(`Initialisation complete.`)
+  }
+
+  /**
+   * Connects to the IPData API and checks the current public ip.
+   *
+   * @return {Promise<IpHistory>}
+   */
+  public async lookup(): Promise<IpHistory> {
+    debug(`Attempting lookup of public IP address.`)
+    const { key, fields } = this._config.ipdata
+    return {
+      ...(await getIpData({ key, fields })),
+      ...{ timestamp: Date.now() }
+    }
   }
 
   /**
@@ -121,35 +152,58 @@ export class Router extends EventEmitter implements RenewableRouter {
    */
   public async renew(): Promise<boolean> {
     // Reset the module to a known state.
+    debug(`Starting IP renewal cycle.`)
     await this.init()
+    // Destructure config items.
+    const {
+      maxAttempts,
+      delay,
+      secret,
+      to,
+      payload,
+      device,
+      priority
+    } = this._config
+    // Set initial ip to invalid state.
+    let ip: IpHistory | undefined = undefined
+    let hasToggled: boolean = false
     // Attempt renewals until a new IP is obtained, or hits max attempts.
-    while (!this.hasNewIp() && this.attempts < this._config.maxAttempts) {
-      // Send payload to Automate to trigger the flow on the device.
-      const { secret, to, payload, device, priority } = this._config
-      await toggleFlightMode({ secret, to, payload, device, priority })
+    debug(`Attempting renewal with a maximum of ${maxAttempts} attempts.`)
+    while (!this.validateIp(ip) && this.attempts < maxAttempts) {
+      if (!hasToggled) {
+        // Send payload to Automate to trigger the flow on the device.
+        debug(`Attempting to toggle flight mode remotely.`)
+        await toggleFlightMode({ secret, to, payload, device, priority })
+        hasToggled = true
+      }
       // Only attempt an ip check if device has connectivity.
       if (await hasConnection()) {
+        debug(`Interface has connectivity!`)
         // Check host's  public ip address.
-        const ip: IpHistory = {
-          ip: await getPublicIp(),
-          timestamp: Date.now()
-        }
+        ip = IpHistorySchema.parse(await this.lookup())
+        debug(`Reflected IP context: `, ip)
         // Add the current public ip to cache.
         this._cache.add(ip)
         // If new IP is different to last ip, return a success response.
-        if (this.hasNewIp()) {
+        if (this.validateIp(ip)) {
           // Add to the history set to register new public ip.
           this._history.add(ip)
           this.emit("success", ip)
           return true
+        } else {
+          // Received invalid IP, try for a new IP.
+          this._cache.clear()
+          hasToggled = false
         }
       }
       // Wait for a specified delay between connection checks.
-      await waitFor(this._config.delay)
+      debug(`Connection not online, waiting ${delay} ms.`)
+      await waitForTimeout(delay)
     }
     // Renewal process failed, return a negative response.
     this._cache.clear()
-    this.emit("error", new Error(`Could not obtain a new IP address.`))
+    debug(`Exceeded maximum attempts of ${maxAttempts}.`)
+    this.emit("error", new RenewalFailedError(maxAttempts))
     return false
   }
 }

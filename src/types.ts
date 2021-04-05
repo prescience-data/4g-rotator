@@ -1,37 +1,32 @@
 import EventEmitter from "events"
+import { z } from "zod"
 
-export interface IpHistory {
-  ip: string
-  timestamp: number
-}
+import {
+  AutomatePayloadSchema,
+  EnvSchema,
+  IpDataConfigSchema,
+  IpDataFieldsSchema,
+  IpDataResponseSchema,
+  IpHistorySchema,
+  PartialRouterConfigSchema,
+  RenewalPrioritySchema,
+  RouterConfigSchema
+} from "./schemas"
 
-export interface RouterEnv extends Record<string, unknown> {
-  IP_RENEWAL_SECRET?: string
-  IP_RENEWAL_EMAIL?: string
-  IP_RENEWAL_PRIORITY?: "normal" | "high" | string
-  IP_RENEWAL_PAYLOAD?: "renew" | string
-  IP_RENEWAL_MAX_ATTEMPTS?: number
-  IP_RENEWAL_DELAY?: number
-}
+// Export the shapes of each zod schema.
+export type RouterEnv = z.infer<typeof EnvSchema>
+export type RenewalPriority = z.infer<typeof RenewalPrioritySchema>
+export type AutomatePayload = z.infer<typeof AutomatePayloadSchema>
+export type RouterConfig = z.infer<typeof RouterConfigSchema>
+export type IpHistory = z.infer<typeof IpHistorySchema>
+export type IpDataConfig = z.infer<typeof IpDataConfigSchema>
+export type IpDataFields = z.infer<typeof IpDataFieldsSchema>
+export type IpDataResponse = z.infer<typeof IpDataResponseSchema>
 
-export interface RouterConfig {
-  secret: string
-  to: string
-  priority: "normal" | "high" | string
-  device?: string
-  payload: "renew" | string
-  maxAttempts: number
-  delay: number
-}
+// Note: Must use z.input for partials.
+export type PartialRouterConfig = z.input<typeof PartialRouterConfigSchema>
 
-export interface AutomatePayload {
-  secret: string
-  to: string
-  priority: "normal" | "high" | string
-  device?: string
-  payload: "renew" | string
-}
-
+// Export the base router shape.
 export interface RenewableRouter extends EventEmitter {
   readonly ip: string | undefined
   readonly lastCachedIp: string | undefined
@@ -42,5 +37,5 @@ export interface RenewableRouter extends EventEmitter {
 
   renew(): Promise<boolean>
 
-  hasNewIp(): boolean
+  validateIp(ip: IpHistory | undefined): boolean
 }

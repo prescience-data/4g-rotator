@@ -16,8 +16,8 @@ This package allows a user to cycle an Android phones flight mode using Automate
 
 1. Set your `"Toggle Flight Mode"` quick access icon to the first icon on your pull down list.
 2. Copy the two `.flo` scripts to your phone.
-   (Note you might need to edit the Flow in step `19` & `43` *([as per PDF](https://github.com/prescience-data/4g-rotator/blob/master/Flows/Toggle%20Flight%20Mode.pdf))* if your language pack calls
-   Flight Mode something like `"Airplane Mode"` or `"Aeroplane Mode"` etc)
+   (Note you might need to edit the Flow in step `19` & `43` *([as per PDF](https://github.com/prescience-data/4g-rotator/blob/master/Flows/Toggle%20Flight%20Mode.pdf))* if your language pack calls Flight Mode something
+   like `"Airplane Mode"` or `"Aeroplane Mode"` etc)
 3. In step `42` *([as per PDF](https://github.com/prescience-data/4g-rotator/blob/master/Flows/Toggle%20Flight%20Mode.pdf))* `"Cloud Receive"`, set the account to your clean Google account.
 4. Disable phone Wifi and start the Flow on your phone. After the flow is started you can exit Automate and it will stay running.
 
@@ -81,6 +81,12 @@ export class Demo {
 
 ## Configuration
 
+### IPData
+
+To access IP reputation context you will need an [IPData](https://docs.ipdata.co/) API key.
+
+As you will generally be cycling less than 1500 times daily, the free plan will suffice.
+
 #### Option 1: Create an `.env` file:
 
 ```dotenv
@@ -90,6 +96,7 @@ IP_RENEWAL_PRIORITY=normal
 IP_RENEWAL_PAYLOAD=renew
 IP_RENEWAL_MAX_ATTEMPTS=3
 IP_RENEWAL_DELAY=1000
+IPDATA_API_KEY=<your-ipdata-api-key>
 ```
 
 #### Option 2: Pass a configuration object:
@@ -132,8 +139,8 @@ But what if you need to access 4G IPs in a different country?
 3. Setup WireGuard VPN as a client instance on your regular PC.
 4. VPN to the headless PC and you'll have access to its SOCKS5 proxy!
 
-The optimal solution is to connect the Compute Stick to WiFi _(which WireGuard will use to connect in)_ and proxy connections out via 4G USB tethering to avoid congestion, but it is possible to go in
-and out via the same 4G provided you have enough bandwidth.
+The optimal solution is to connect the Compute Stick to WiFi _(which WireGuard will use to connect in)_ and proxy connections out via 4G USB tethering to avoid congestion, but it is possible to go in and out via the same 4G provided you
+have enough bandwidth.
 
 You can install some remote management software such as `AnyDesk` to remote into the headless PC whenever you need to fix or install something provided it remains connected to local internet.
 
@@ -142,4 +149,3 @@ You can install some remote management software such as `AnyDesk` to remote into
 When configured correctly, the package should run like this:
 
 https://youtu.be/rbMXmME2TRs
-

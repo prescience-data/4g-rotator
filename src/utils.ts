@@ -1,7 +1,14 @@
-import got from "got"
+import { debug as debugFactory, Debugger } from "debug"
 import isOnline from "is-online"
 
-import { AutomatePayload } from "./types"
+import { env } from "./schemas"
+import { IpHistory } from "./types"
+
+/**
+ * Export a debug module for the package.
+ * @type {debug.Debugger}
+ */
+export const debug: Debugger = debugFactory("renew-ip")
 
 /**
  * Pauses for a specified duration.
@@ -9,7 +16,8 @@ import { AutomatePayload } from "./types"
  * @param {number} ms
  * @return {Promise<void>}
  */
-export const waitFor = async (ms: number): Promise<void> => {
+export const waitForTimeout = async (ms: number): Promise<void> => {
+  debug(`Waiting for timeout after ${ms}ms.`)
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve()
@@ -24,33 +32,26 @@ export const waitFor = async (ms: number): Promise<void> => {
  * @return {Promise<boolean>}
  */
 export const hasConnection = async (
-  maxAttempts: number = 5
+  maxAttempts: number = env.POLL_ATTEMPTS
 ): Promise<boolean> => {
   let hasConnection: boolean = false
   let attempt: number = 0
   while (!hasConnection && attempt < maxAttempts) {
-    await waitFor(2500)
+    debug(`Polling for connectivity. Attempt #${attempt}...`)
+    await waitForTimeout(env.POLL_TIMEOUT)
     hasConnection = await isOnline()
     attempt++
   }
+  debug(`Connectivity after ${attempt} attempts:`, hasConnection)
   return hasConnection
 }
 
 /**
- * Sends a request to the Automate endpoint to execute the installed Flow.
+ * Pops the last ip history from a history set and attempts to return the ip attribute.
  *
- * @param {AutomatePayload} params
- * @param {number} delay
- * @return {Promise<void>}
+ * @param {Set<IpHistory>} history
+ * @return {string | undefined}
  */
-export const toggleFlightMode = async (
-  params: AutomatePayload,
-  delay: number = 15000
-): Promise<void> => {
-  await got.post("https://llamalab.com/automate/cloud/message", {
-    json: params,
-    responseType: "json"
-  })
-  // Give the device time to reconnect.
-  await waitFor(delay)
+export const getLastIp = (history: Set<IpHistory>): string | undefined => {
+  return [...(history.values() || [])].pop()?.ip
 }
