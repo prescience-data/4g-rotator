@@ -17,6 +17,7 @@ export {
   IpHistory,
   PartialRouterConfig,
   RenewableRouter,
+  RenewIp,
   RouterConfig,
   RouterEnv
 } from "./types"
