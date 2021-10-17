@@ -1,6 +1,6 @@
 {
   "name": "renew-ip",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A module for renewing 4G/LTE IP addresses on tethered Android phones from Node.",
   "keywords": [
     "4g",
