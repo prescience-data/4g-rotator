@@ -22,9 +22,10 @@ export type IpHistory = z.infer<typeof IpHistorySchema>
 export type IpDataConfig = z.infer<typeof IpDataConfigSchema>
 export type IpDataFields = z.infer<typeof IpDataFieldsSchema>
 export type IpDataResponse = z.infer<typeof IpDataResponseSchema>
-
-// Note: Must use z.input for partials.
 export type PartialRouterConfig = z.input<typeof PartialRouterConfigSchema>
+
+// Export one-shot function type.
+export type RenewIp = (config: PartialRouterConfig) => Promise<boolean>
 
 // Export the base router shape.
 export interface RenewableRouter extends EventEmitter {
