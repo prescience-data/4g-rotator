@@ -2,27 +2,29 @@ import got from "got"
 import { URL } from "url"
 
 import { AUTOMATE_SERVER_URL, IPDATA_SERVER_URL } from "./constants"
-import { env } from "./schemas"
+import { AutomatePayloadSchema, env } from "./schemas"
 import { AutomatePayload, IpDataConfig, IpDataResponse } from "./types"
 import { debug, waitForTimeout } from "./utils"
 
 /**
  * Sends a request to the Automate endpoint to execute the installed Flow.
  *
- * @param {AutomatePayload} json
+ * @param {AutomatePayload} payload
  * @param {number} delay
  * @return {Promise<void>}
  */
 export const toggleFlightMode = async (
-  json: AutomatePayload,
+  payload: AutomatePayload,
   delay: number = env.TOGGLE_DELAY
 ): Promise<void> => {
   try {
     // Post the toggle request to the Automate server.
-    debug(`Dispatching payload to Automate app: `, json)
-    await got.post(AUTOMATE_SERVER_URL, { json })
+    debug(`Dispatching payload to Automate app: `, payload)
+    await got.post(AUTOMATE_SERVER_URL, {
+      json: AutomatePayloadSchema.parse(payload)
+    })
   } catch (err) {
-    console.log(err.message)
+    console.error(err.message)
   }
   // Give the device time to reconnect.
   await waitForTimeout(delay)
