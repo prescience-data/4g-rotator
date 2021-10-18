@@ -33,6 +33,8 @@ Install the package:
 $ npm install renew-ip
 ```
 
+### Option 1: Class Instantiation
+
 Instantiate a new `Router` in your application.
 
 An example is provided here, and also in the `./examples` folder.
@@ -79,6 +81,31 @@ export class Demo {
 }
 ```
 
+### Option 2: Factory
+
+```typescript
+
+import { useRouter  } from "renew-up"
+
+// Generate renewal function.
+const renewIp: RenewIp = useRouter({
+  maxAttempts: 5,
+  delay: 1500
+})
+
+// ...
+
+// Renew ip!
+await renewIp()
+
+```
+
+### Option 3: Binary
+
+```shell
+$ npx renew-ip 5 # (optional: attempts)
+```
+
 ## Configuration
 
 ### IPData
@@ -118,9 +145,9 @@ const router: RenewableRouter = new Router(config)
 
 Recommend enabling the `Auto Tether` flow on the handset to avoid having to manually enable USB tethering each time you plug it in as a USB modem.
 
-Additionally, you can use this via Wifi Tethering, although it's quite a bit more complicated / less reliable to manage this in a Node script.
+Additionally, you can use this via Wi-Fi Tethering, although it's quite a bit more complicated / less reliable to manage this in a Node script.
 
-To avoid data excess, disable your phones auto update over 4G and set to only update over Wifi.
+To avoid data excess, disable your phones' auto update over 4G and set to only update over Wi-Fi.
 
 ## Running Remotely / Offshore
 
@@ -139,7 +166,7 @@ But what if you need to access 4G IPs in a different country?
 3. Setup WireGuard VPN as a client instance on your regular PC.
 4. VPN to the headless PC and you'll have access to its SOCKS5 proxy!
 
-The optimal solution is to connect the Compute Stick to WiFi _(which WireGuard will use to connect in)_ and proxy connections out via 4G USB tethering to avoid congestion, but it is possible to go in and out via the same 4G provided you
+The optimal solution is to connect the Compute Stick to Wi-Fi _(which WireGuard will use to connect in)_ and proxy connections out via 4G USB tethering to avoid congestion, but it is possible to go in and out via the same 4G provided you
 have enough bandwidth.
 
 You can install some remote management software such as `AnyDesk` to remote into the headless PC whenever you need to fix or install something provided it remains connected to local internet.
