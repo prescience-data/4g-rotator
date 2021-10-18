@@ -85,7 +85,7 @@ export class Demo {
 
 ```typescript
 
-import { useRouter  } from "renew-up"
+import { useRouter  } from "renew-ip"
 
 // Generate renewal function.
 const renewIp: RenewIp = useRouter({
