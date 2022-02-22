@@ -17,15 +17,6 @@ export const RenewalPayloadContentSchema = z.union([
 ])
 
 /**
- * Env vars are always strings, so they need to be transformed prior to parsing.
- * @type {ZodEffects}
- */
-const numberString = z.preprocess(
-  (value) => (typeof value === "string" ? parseInt(value) : value),
-  z.number()
-)
-
-/**
  * Template a dot env required value message.
  *
  * @param {string} value
@@ -42,16 +33,33 @@ export const EnvSchema = z.object({
   IP_RENEWAL_SECRET: z.string({
     required_error: createDotenvMessage("IP_RENEWAL_SECRET")
   }),
-  IP_RENEWAL_EMAIL: z.string({
-    required_error: createDotenvMessage("IP_RENEWAL_EMAIL")
-  }),
+  IP_RENEWAL_EMAIL: z
+    .string({
+      required_error: createDotenvMessage("IP_RENEWAL_EMAIL")
+    })
+    .email(),
   IP_RENEWAL_PRIORITY: RenewalPrioritySchema.default("normal"),
   IP_RENEWAL_PAYLOAD_CONTENT: RenewalPayloadContentSchema.default("renew"),
-  IP_RENEWAL_MAX_ATTEMPTS: numberString.default(3),
-  IP_RENEWAL_DELAY: numberString.default(1000),
-  POLL_ATTEMPTS: numberString.default(5),
-  POLL_TIMEOUT: numberString.default(3000),
-  TOGGLE_DELAY: numberString.default(15000),
+  IP_RENEWAL_MAX_ATTEMPTS: z
+    .string()
+    .default("3")
+    .transform((value) => parseInt(value)),
+  IP_RENEWAL_DELAY: z
+    .string()
+    .default("1000")
+    .transform((value) => parseInt(value)),
+  POLL_ATTEMPTS: z
+    .string()
+    .default("5")
+    .transform((value) => parseInt(value)),
+  POLL_TIMEOUT: z
+    .string()
+    .default("3000")
+    .transform((value) => parseInt(value)),
+  TOGGLE_DELAY: z
+    .string()
+    .default("15000")
+    .transform((value) => parseInt(value)),
   IPDATA_API_KEY: z.string().default("test")
 })
 
