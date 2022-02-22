@@ -17,19 +17,41 @@ export const RenewalPayloadContentSchema = z.union([
 ])
 
 /**
+ * Env vars are always strings, so they need to be transformed prior to parsing.
+ * @type {ZodEffects}
+ */
+const numberString = z.preprocess(
+  (value) => (typeof value === "string" ? parseInt(value) : value),
+  z.number()
+)
+
+/**
+ * Template a dot env required value message.
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+const createDotenvMessage = (value: string): string =>
+  `You must create a .env file in your project root with the "${value}" value. See https://github.com/motdotla/dotenv for more information on dotenv.`
+
+/**
  * Define a validation schema for environment variables.
  * @type {z.ZodObject}
  */
 export const EnvSchema = z.object({
-  IP_RENEWAL_SECRET: z.string(),
-  IP_RENEWAL_EMAIL: z.string(),
+  IP_RENEWAL_SECRET: z.string({
+    required_error: createDotenvMessage("IP_RENEWAL_SECRET")
+  }),
+  IP_RENEWAL_EMAIL: z.string({
+    required_error: createDotenvMessage("IP_RENEWAL_EMAIL")
+  }),
   IP_RENEWAL_PRIORITY: RenewalPrioritySchema.default("normal"),
   IP_RENEWAL_PAYLOAD_CONTENT: RenewalPayloadContentSchema.default("renew"),
-  IP_RENEWAL_MAX_ATTEMPTS: z.number().default(3),
-  IP_RENEWAL_DELAY: z.number().default(1000),
-  POLL_ATTEMPTS: z.number().default(5),
-  POLL_TIMEOUT: z.number().default(3000),
-  TOGGLE_DELAY: z.number().default(15000),
+  IP_RENEWAL_MAX_ATTEMPTS: numberString.default(3),
+  IP_RENEWAL_DELAY: numberString.default(1000),
+  POLL_ATTEMPTS: numberString.default(5),
+  POLL_TIMEOUT: numberString.default(3000),
+  TOGGLE_DELAY: numberString.default(15000),
   IPDATA_API_KEY: z.string().default("test")
 })
 
@@ -38,7 +60,7 @@ export const EnvSchema = z.object({
  * @type {RouterEnv}
  */
 export const env: z.infer<typeof EnvSchema> = EnvSchema.parse(
-  dotenv.config().parsed || {}
+  dotenv.config().parsed ?? {}
 )
 /**
  * Define a validation schema for the request sent to the Automate endpoint.
@@ -46,7 +68,7 @@ export const env: z.infer<typeof EnvSchema> = EnvSchema.parse(
  */
 export const AutomatePayloadSchema = z.object({
   secret: z.string().default(env.IP_RENEWAL_SECRET),
-  to: z.string().default(env.IP_RENEWAL_EMAIL),
+  to: z.string().email().default(env.IP_RENEWAL_EMAIL),
   priority: RenewalPrioritySchema.default(env.IP_RENEWAL_PRIORITY),
   device: z.string().optional(),
   payload: RenewalPayloadContentSchema.default(env.IP_RENEWAL_PAYLOAD_CONTENT)

@@ -10,7 +10,7 @@
     "automate"
   ],
   "license": "MIT",
-  "author": "0x00trace",
+  "author": "presciencedata@gmail.com",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "files": [
@@ -31,25 +31,25 @@
     "upgrade": "ncu -u --packageFile package.json && run-s sort && run-s update"
   },
   "dependencies": {
-    "debug": "^4.3.2",
+    "debug": "^4.3.3",
     "dotenv": "^8.6.0",
-    "got": "^11.8.2",
+    "got": "^12.0.1",
     "is-online": "^9.0.1",
     "tslib": "^2.3.1",
-    "zod": "^3.10.0"
+    "zod": "^3.11.6"
   },
   "devDependencies": {
-    "@rushstack/eslint-config": "^2.4.3",
+    "@rushstack/eslint-config": "^2.5.1",
     "@types/debug": "^4.1.7",
-    "@types/node": "^14.17.27",
+    "@types/node": "^14.18.12",
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "eslint": "~7.32.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
-    "prettier": "^2.4.1",
-    "rimraf": "^3.0.2",
     "npm-run-all": "^4.1.5",
-    "sort-package-json": "^1.52.0",
+    "prettier": "^2.5.1",
+    "rimraf": "^3.0.2",
+    "sort-package-json": "^1.54.0",
     "typescript": "4.2.3"
   },
   "optionalDependencies": {
