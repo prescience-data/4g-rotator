@@ -9,6 +9,7 @@ This package allows a user to cycle an Android phones flight mode using Automate
 1. A clean 4G capable Android phone _(ie ideally not the one you use day to day to avoid any identity leaks via App session fingerprinting)_. Does not require root.
 2. A clean Google account not used for anything else to receive cloud messages.
 3. `Automate` app https://play.google.com/store/apps/details?id=com.llamalab.automate
+4. secret key from https://llamalab.com/automate/cloud/
 
 ## Installation
 
